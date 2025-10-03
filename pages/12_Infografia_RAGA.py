@@ -1,6 +1,9 @@
 import streamlit as st
 from streamlit.components.v1 import html
 
+# Configura la página para usar el layout ancho
+st.set_page_config(layout="wide")
+
 st.title("Infografía — Valoración del Proyecto RAGA")
 
 # Banner global de incidentes (si está activo desde Runbook)
