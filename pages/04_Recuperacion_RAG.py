@@ -29,7 +29,7 @@ def permitido(fid):
     return pg.permitido(fid)
 
 permitidos = [(fid,name,txt) for (fid,name,txt) in docs if permitido(fid)]
-bloqueados = [(fid,name,_) for (fid,name,_) in docs if not permitido(fid)]
+bloqueados = [(fid,name) for (fid,name,_) in docs if not permitido(fid)]
 
 # --- Feedback visual del Policy-Gate ---
 st.info(f"Fuentes permitidas para la búsqueda: **{[n for _,n,_ in permitidos]}**")
@@ -69,3 +69,5 @@ if "hits" in st.session_state:
             with st.expander(f"**{i}. {name}** [{fid}] — Similitud: {s:.2f}"):
                 # Mostramos un snippet del contenido
                 st.code("\n".join(content.splitlines()[:10]), language="markdown")
+
+
