@@ -5,24 +5,34 @@ from utils.policy_gate import PolicyGate
 
 st.title("3) Policy-Gate (licencias, PII, jurisdicción)")
 
+# Banner global de incidentes
+if st.session_state.get("global_alert"):
+    st.error(st.session_state["global_alert"])
+
 cfg_path = Path(__file__).parent.parent / "config" / "policy_gate.yaml"
 pg = PolicyGate(cfg_path)
 fuentes = pg.cfg.get("fuentes", [])
-
-# 🔧 Normalizar a DataFrame y forzar 'pii' a texto (evita ArrowInvalid por mezcla bool/str)
 df = pd.DataFrame(fuentes)
+
+# Normalizar a texto para evitar ArrowInvalid (mezcla bool/str)
 if "pii" in df.columns:
     df["pii"] = df["pii"].map({True: "sí", False: "no"}).astype(str)
 
-st.write("Reglas activas:")
-st.dataframe(df, width="stretch")  # ← sustituye use_container_width por width
+st.subheader("Estado de fuentes")
+for _, row in df.iterrows():
+    estado = "🟢 Permitido" if row.get("permitido") else "🔴 Bloqueado"
+    st.markdown(
+        f"- **{row.get('nombre','?')}** (`{row.get('id','?')}`) — {estado} · "
+        f"Licencia: `{row.get('licencia','?')}` · PII: `{row.get('pii','?')}`"
+    )
 
-# Simulación de bloqueos manuales (override)
-ids = df["id"].tolist() if "id" in df.columns else [f.get("id") for f in fuentes]
+ids = df["id"].tolist() if "id" in df.columns else []
 to_block = st.multiselect("Forzar bloqueo de:", ids, default=[])
-if to_block:
-    st.session_state["policy_override"] = {fid: False for fid in to_block}
-    st.warning(f"Se bloquearon: {', '.join(to_block)} (simulado)")
-else:
-    st.session_state["policy_override"] = {}
+st.session_state["policy_override"] = {fid: False for fid in to_block} if to_block else {}
+st.session_state["policy_msg"] = (
+    f"Fuentes bloqueadas por policy: {', '.join(to_block)}" if to_block else ""
+)
+
+with st.expander("Ver tabla detallada"):
+    st.dataframe(df, width="stretch")  # (en lugar de use_container_width)
 
