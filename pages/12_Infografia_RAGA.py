@@ -23,11 +23,6 @@ INFOGRAFIA = r"""<!DOCTYPE html>
         body { font-family: 'Inter', sans-serif; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
         @media (min-width: 768px) { .chart-container { height: 350px; } }
-        .gemini-btn { transition: all 0.2s ease-in-out; }
-        .gemini-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        #gemini-modal { transition: opacity 0.3s ease-in-out; }
-        .spinner { border-top-color: #3498db; animation: spin 1s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -43,29 +38,20 @@ INFOGRAFIA = r"""<!DOCTYPE html>
             <h2 class="text-3xl font-bold text-[#003f5c] mb-4">Síntesis Ejecutiva</h2>
             <p class="max-w-4xl mx-auto text-lg mb-8">RAGA (Retrieval-Augmented Governed Analysis) trasciende las implementaciones convencionales de RAG al integrar de forma holística tres pilares fundamentales. Su valor no reside en un componente aislado, sino en su arquitectura integral para una IA confiable.</p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#7a5195] flex flex-col justify-between">
-                    <div>
-                        <div class="text-4xl mb-3">⚖️</div>
-                        <h3 class="text-xl font-bold mb-2 text-[#7a5195]">Gobernanza de Datos</h3>
-                        <p>Mecanismos proactivos que aseguran el cumplimiento y la seguridad antes de cualquier procesamiento.</p>
-                    </div>
-                    <button class="gemini-btn mt-4 bg-[#7a5195] text-white px-4 py-2 rounded-lg font-semibold text-sm" data-concept="Gobernanza de Datos en IA">✨ Explicar con Analogía</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#7a5195]">
+                    <div class="text-4xl mb-3">⚖️</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#7a5195]">Gobernanza de Datos</h3>
+                    <p>Mecanismos proactivos que aseguran el cumplimiento y la seguridad antes de cualquier procesamiento.</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#ef5675] flex flex-col justify-between">
-                    <div>
-                        <div class="text-4xl mb-3">🧩</div>
-                        <h3 class="text-xl font-bold mb-2 text-[#ef5675]">Teoría de la Argumentación</h3>
-                        <p>Estructura las respuestas de la IA de forma lógica y explicable, superando la "caja negra".</p>
-                    </div>
-                    <button class="gemini-btn mt-4 bg-[#ef5675] text-white px-4 py-2 rounded-lg font-semibold text-sm" data-concept="Teoría de la Argumentación en IA (CEWR)">✨ Explicar con Analogía</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#ef5675]">
+                    <div class="text-4xl mb-3">🧩</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#ef5675]">Teoría de la Argumentación</h3>
+                    <p>Estructura las respuestas de la IA de forma lógica y explicable, superando la "caja negra".</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#ffa600] flex flex-col justify-between">
-                    <div>
-                        <div class="text-4xl mb-3">🧑‍💼</div>
-                        <h3 class="text-xl font-bold mb-2 text-[#ffa600]">Supervisión Humana</h3>
-                        <p>Posiciona al usuario como director estratégico del proceso, garantizando el control y la validación.</p>
-                    </div>
-                    <button class="gemini-btn mt-4 bg-[#ffa600] text-white px-4 py-2 rounded-lg font-semibold text-sm" data-concept="Supervisión Humana en sistemas de IA">✨ Explicar con Analogía</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-[#ffa600]">
+                    <div class="text-4xl mb-3">🧑‍💼</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#ffa600]">Supervisión Humana</h3>
+                    <p>Posiciona al usuario como director estratégico del proceso, garantizando el control y la validación.</p>
                 </div>
             </div>
         </section>
@@ -125,15 +111,6 @@ INFOGRAFIA = r"""<!DOCTYPE html>
             </div>
         </section>
 
-        <section id="gemini-summary" class="bg-white p-10 rounded-xl shadow-lg text-center">
-            <h2 class="text-3xl font-bold text-[#003f5c] mb-4">Síntesis Asistida por IA</h2>
-            <p class="max-w-3xl mx-auto mb-6">Utilice la API de Gemini para generar un resumen ejecutivo de los conceptos clave del proyecto RAGA, enfocado en el valor para un director de tecnología (CTO).</p>
-            <button id="gemini-summary-btn" class="gemini-btn bg-gradient-to-r from-[#003f5c] to-[#7a5195] text-white px-8 py-3 rounded-lg font-bold text-lg">✨ Generar Resumen Ejecutivo con IA</button>
-            <div id="summary-output-container" class="mt-8 text-left max-w-3xl mx-auto hidden">
-                 <div id="summary-output" class="p-6 bg-gray-100 rounded-lg"></div>
-            </div>
-        </section>
-
         <section id="valor" class="mt-20 bg-white p-10 rounded-xl shadow-lg">
             <h2 class="text-3xl font-bold text-center text-[#003f5c] mb-12">Valor Diferencial para el Entorno Corporativo</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
@@ -157,20 +134,6 @@ INFOGRAFIA = r"""<!DOCTYPE html>
 
     </main>
     
-    <div id="gemini-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="modal-title" class="text-2xl font-bold text-[#003f5c]">Explicación con IA</h3>
-                <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
-            </div>
-            <div id="modal-content" class="text-gray-700">
-                <div class="flex justify-center items-center h-32">
-                    <div class="spinner w-12 h-12 rounded-full border-4 border-gray-200"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer class="bg-[#003f5c] text-white text-center mt-16 py-8 px-4">
         <p class="font-bold text-xl mb-2">RAGA: Un Artefacto de Conocimiento</p>
         <p class="max-w-2xl mx-auto">El proyecto encapsula y transfiere prácticas avanzadas de la investigación en IA responsable a un formato comprensible, evaluable y adoptable por el sector empresarial.</p>
@@ -252,80 +215,14 @@ INFOGRAFIA = r"""<!DOCTYPE html>
     createRiskChart('riskChart2', 'Opacidad del Modelo', '#7a5195');
     createRiskChart('riskChart3', 'Costes Operativos', '#ef5675');
     createRiskChart('riskChart4', 'Desalineación Estratégica', '#ffa600');
-
-    const modal = document.getElementById('gemini-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalContent = document.getElementById('modal-content');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
-    const spinnerHtml = `<div class="flex justify-center items-center h-32"><div class="spinner w-12 h-12 rounded-full border-4 border-gray-200"></div></div>`;
-
-    const showModal = (title) => { modalTitle.textContent = title; modalContent.innerHTML = spinnerHtml; modal.classList.remove('hidden'); setTimeout(() => modal.classList.remove('opacity-0'), 10); };
-    const hideModal = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.classList.add('hidden'), 300); };
-    modalCloseBtn.addEventListener('click', hideModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) { hideModal(); } });
-
-    const callGeminiApi = async (prompt, maxRetries = 3) => {
-        const apiKey = ""; // Coloca aquí tu API key si deseas habilitar esta función en cliente.
-        if (!apiKey) { return "Función de IA cliente deshabilitada en la demo (sin API key)."; }
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-        const payload = { contents: [{ parts: [{ text: prompt }] }] };
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-                if (candidate && candidate.content?.parts?.[0]?.text) { return candidate.content.parts[0].text; } else { throw new Error('Respuesta inválida de la API'); }
-            } catch (error) {
-                if (i === maxRetries - 1) { return `Error al contactar la IA. Intente más tarde.`; }
-                const delay = Math.pow(2, i) * 1000; await new Promise(res => setTimeout(res, delay));
-            }
-        }
-    };
-
-    document.querySelectorAll('.gemini-btn[data-concept]').forEach(button => {
-        button.addEventListener('click', async () => {
-            const concept = button.dataset.concept;
-            const prompt = `Explica el concepto de '${concept}' aplicado a sistemas de inteligencia artificial, usando una analogía simple y fácil de entender para un público no técnico. La explicación debe ser concisa, en español.`;
-            showModal(`Explicando: ${concept}`);
-            const result = await callGeminiApi(prompt);
-            modalContent.innerHTML = `<p>${(result || '').toString().replace(/\\n/g, '<br>')}</p>`;
-        });
-    });
-
-    const summaryBtn = document.getElementById('gemini-summary-btn');
-    const summaryOutputContainer = document.getElementById('summary-output-container');
-    const summaryOutput = document.getElementById('summary-output');
-
-    if (summaryBtn) {
-        summaryBtn.addEventListener('click', async () => {
-            summaryBtn.disabled = true;
-            summaryBtn.innerHTML = '<div class="flex items-center justify-center"><div class="spinner w-6 h-6 rounded-full border-2 border-white mr-3"></div>Procesando...</div>';
-            summaryOutputContainer.classList.remove('hidden');
-            summaryOutput.innerHTML = `<div class="flex justify-center items-center h-32"><div class="spinner w-12 h-12 rounded-full border-4 border-gray-200"></div></div>`;
-
-            const infographicContent = `
-                El proyecto RAGA (Retrieval-Augmented Governed Analysis) es un marco para una IA segura, explicable y supervisada. 
-                Sus pilares son: 
-                1) Gobernanza de Datos: 'Policy-Gate' proactivo para filtrar fuentes por licencias, PII y jurisdicción. 
-                2) Teoría de la Argumentación: CEWR para estructurar respuestas con citas, evitando 'caja negra'. 
-                3) Supervisión Humana: el usuario dirige el proceso con control en puntos clave. 
-                Valor: mitiga riesgos regulatorios, aumenta capacidad profesional y reduce inversión inicial para adoptar IA confiable.
-            `;
-
-            const prompt = `Actúa como un consultor de IA. Basado en el siguiente texto sobre RAGA, genera un resumen ejecutivo de 3 puntos clave para un CTO. Resalta beneficios empresariales. Texto: ${infographicContent}`;
-            const result = await callGeminiApi(prompt);
-            summaryOutput.innerHTML = (result || '').toString().replace(/\\n/g, '<br>');
-            summaryBtn.disabled = false;
-            summaryBtn.innerHTML = '✨ Generar Resumen Ejecutivo con IA';
-        });
-    }
 </script>
 </body>
-</html>"""
+</html>
+"""
 
 # Altura generosa + scroll (la infografía es larga)
-html(INFOGRAFIA, height=3800, scrolling=True)
+html(INFOGRAFIA, height=2800, scrolling=True)
+
 
 
 
