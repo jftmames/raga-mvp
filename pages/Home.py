@@ -1,13 +1,25 @@
 import streamlit as st
 
-st.set_page_config(page_title="RAGA — MVP Simulado", page_icon="🌍", layout="wide")
-st.title("RAGA — MVP Simulado (explicación realista de todos los componentes)")
-st.caption("Tour: Intake → Plan → Ontología → Policy-Gate → Recuperación → Composición → Argumentos → EEE → Observabilidad → Runbook → AI Act → Auditoría")
+st.title("RAGA — Tour del pipeline")
+st.caption("Intake → Plan → Ontología → Policy-Gate → RAG → Composición → CEWR → EEE → Observabilidad → Runbook → Auditoría")
 
-st.markdown("""
-### Qué vas a ver
-- **Explicación guiada** de cada componente con datos simulados pero creíbles.
-- **Controles de demo** para forzar fallos y activar **degradación** (modelo mediano, truncation, cache).
-- **Métricas**: %citas válidas, EEE, coste p50/p95, SLA.
-- **Trazabilidad**: cada ejecución genera un **log** descargable.
+# Banner global de incidentes
+if st.session_state.get("global_alert"):
+    st.error(st.session_state["global_alert"])
+
+# Diagrama de flujo del pipeline (visual y didáctico)
+st.graphviz_chart("""
+digraph G {
+  rankdir=LR;
+  node [shape=box, style=rounded];
+  Intake -> Plan -> Ontologia -> PolicyGate -> RAG -> Composicion -> CEWR -> EEE -> Observabilidad -> Runbook -> Auditoria;
+}
 """)
+
+# Contexto del caso de demo + CTA claro
+st.markdown("""
+**Caso de demo:** exportación de *conservas vegetales* a **México**.  
+Verás cómo cada componente afecta a **evidencia, costes y SLA** en tiempo real.
+""")
+
+st.page_link("pages/01_Intake_y_Plan.py", label="Iniciar tour ahora →", icon="▶️")
