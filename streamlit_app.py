@@ -9,4 +9,4 @@ if st.session_state.get("global_alert"):
 st.write("Usa **Pages** para navegar por el MVP o entra a la portada del tour:")
 
 # Importante: la ruta debe apuntar a la página dentro de /pages
-st.page_link("pages/Home.py", label="Ir al Tour principal", icon="🏠")
+st.page_link("pages/00_Home.py", label="Ir al Tour principal", icon="🏠")
