@@ -1,0 +1,55 @@
+fuentes:
+  - id: boe
+    nombre: BOE
+    licencia: open
+    pii: false
+    jurisdiccion: ES
+    permitido: true
+    prohibido: ["reescritura creativa sin cita"]
+    retencion_meses: 12
+    observaciones: "Mantener URL/fecha en la cita"
+  - id: doue
+    nombre: DOUE
+    licencia: open
+    pii: false
+    jurisdiccion: UE
+    permitido: true
+    prohibido: ["reescritura creativa sin cita"]
+    retencion_meses: 12
+    observaciones: "Mantener URL/fecha en la cita"
+  - id: aicep
+    nombre: AICEP (PT)
+    licencia: open
+    pii: false
+    jurisdiccion: PT
+    permitido: true
+    prohibido: []
+    retencion_meses: 12
+    observaciones: ""
+  - id: mx_hs
+    nombre: DOF/SAT (MX) — HS
+    licencia: open
+    pii: false
+    jurisdiccion: MX
+    permitido: true
+    prohibido: []
+    retencion_meses: 12
+    observaciones: ""
+  - id: priv_db
+    nombre: Base jurídica privada X
+    licencia: contrato
+    pii: posible
+    jurisdiccion: ES
+    permitido: true
+    prohibido: ["entrenar modelos"]
+    retencion_meses: 3
+    observaciones: "Log de accesos; límite contractual"
+  - id: stock
+    nombre: Banco de imágenes stock
+    licencia: royalty_free_limitada
+    pii: false
+    jurisdiccion: mundial_limitada
+    permitido: false
+    prohibido: ["reutilizar fuera de licencia", "redistribuir"]
+    retencion_meses: 0
+    observaciones: "Usar sólo 'paquete seguro' verificado"

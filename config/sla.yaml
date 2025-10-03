@@ -1,0 +1,24 @@
+productos:
+  dossier:
+    sla_segundos: 120
+    calidad_minima:
+      citas_validas_pct: 95
+      eee_min: 2.5
+    slo_coste:
+      p50_euros: 0.40
+      p95_euros: 0.90
+  dictamen_pi:
+    sla_segundos: 90
+    calidad_minima:
+      precision_normativa_pct: 95
+      eee_min: 2.5
+    slo_coste:
+      p50_euros: 0.30
+      p95_euros: 0.70
+  hs_preliminar:
+    sla_segundos: 45
+    calidad_minima:
+      top3_pct: 90
+    slo_coste:
+      p50_euros: 0.20
+      p95_euros: 0.50

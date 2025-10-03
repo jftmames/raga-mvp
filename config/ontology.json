@@ -1,0 +1,59 @@
+{
+  "conceptos": {
+    "Producto": [
+      "producto",
+      "mercancía",
+      "bien"
+    ],
+    "Mercado": [
+      "país",
+      "mercado",
+      "destino"
+    ],
+    "Norma": [
+      "norma",
+      "reglamento",
+      "ley",
+      "requisito"
+    ],
+    "Arancel": [
+      "arancel",
+      "arancelario",
+      "HS",
+      "clasificación"
+    ],
+    "Licencia": [
+      "licencia",
+      "uso",
+      "permiso",
+      "copyright"
+    ],
+    "Ferias": [
+      "feria",
+      "evento",
+      "salón"
+    ],
+    "Organismo": [
+      "ICEX",
+      "Cámara",
+      "AICEP",
+      "SAT",
+      "EUIPO"
+    ]
+  },
+  "sinonimos": {
+    "conservas vegetales": [
+      "conservas",
+      "vegetales en conserva",
+      "hortícolas procesados"
+    ],
+    "México": [
+      "MX",
+      "Estados Unidos Mexicanos"
+    ],
+    "Portugal": [
+      "PT",
+      "República Portuguesa"
+    ]
+  }
+}
