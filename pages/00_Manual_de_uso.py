@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.title("Manual de uso — RAGA (MVP)")
-st.caption("Guía integrada: propósito, uso por páginas, buenas prácticas y solución de problemas.")
+st.caption("Guía integrada: propósito, roles, flujo, puntos de interacción humana y cuándo entra la IA.")
 
 # Banner global (si Runbook activó una alerta)
 if st.session_state.get("global_alert"):
@@ -10,60 +10,63 @@ if st.session_state.get("global_alert"):
 # Navegación del manual
 secciones = [
     "1. Propósito y alcance",
-    "2. Público objetivo",
+    "2. Roles y responsabilidades (HITL)",
     "3. Requisitos e instalación",
     "4. Estructura del proyecto",
     "5. Flujo de trabajo (visión general)",
     "6. Uso paso a paso (demo guiada)",
-    "7. Buenas prácticas de presentación",
+    "7. Dónde consulta la IA (y bajo qué control)",
     "8. Observabilidad, SLO/SLA y costes",
     "9. Cumplimiento (Policy-Gate y AI Act)",
-    "10. Solución de problemas (FAQ técnico)",
-    "11. Mantenimiento y versionado",
-    "12. Glosario rápido",
+    "10. Mantenimiento y versionado",
+    "11. Glosario rápido",
 ]
 section = st.sidebar.radio("Secciones del manual", secciones, index=0)
 
 def h2(txt): st.subheader(txt)
 
-# 1
+# 1) Propósito
 if section == "1. Propósito y alcance":
     h2("Propósito")
     st.write(
         "RAGA es un pipeline de informes legales/de negocio con trazabilidad y control de costes. "
-        "No es un chat, es una línea de producción: Intake → Plan → Ontología → Policy-Gate → RAG → "
-        "Composición → Argumentación (CEWR) → EEE → Observabilidad → Runbook → Auditoría."
+        "No es un chat autónomo: **siempre hay una persona (PYME/consultor)** que guía las decisiones, "
+        "y la IA se usa con límites claros (citas, umbrales de calidad y supervisión humana)."
     )
     h2("Qué resuelve")
     st.markdown(
-        "- **Explicabilidad y evidencia**: respuestas con **citas** y **argumentación**.\n"
-        "- **Gobernanza**: **Policy-Gate** bloquea fuentes por licencia/PII/jurisdicción.\n"
-        "- **Calidad**: evaluación **EEE** (heurística de demo).\n"
+        "- **Explicabilidad y evidencia**: respuestas con **citas** y **argumentación** (CEWR).\n"
+        "- **Gobernanza**: **Policy-Gate** bloquea fuentes por licencia/PII/jurisdicción antes de buscar.\n"
+        "- **Calidad**: evaluación **EEE** (heurística de demo) y bloqueo por umbral.\n"
         "- **Gestión**: **coste/latencia p50/p95** y degradación automática (Runbook)."
     )
-    h2("Limitaciones del MVP")
+    h2("Alcance del MVP")
     st.markdown(
-        "- Recuperación y EEE simplificadas para demo.\n"
-        "- Ontología mínima, fuentes de ejemplo.\n"
-        "- Métricas y logs orientados a explicar concepto (no producción)."
+        "- Varias piezas (RAG, CEWR, EEE) están **simuladas** para explicar el concepto, siempre con **persona al mando**.\n"
+        "- En producción, ciertos pasos consultarán modelos de IA; aquí se indica **cuándo** y **cómo**."
     )
 
-# 2
-elif section == "2. Público objetivo":
-    h2("Para quién")
+# 2) Roles (Human-in-the-Loop)
+elif section == "2. Roles y responsabilidades (HITL)":
+    h2("La persona guía; la IA asiste")
     st.markdown(
-        "- **Dirección y negocio**: coste, tiempos y garantías.\n"
-        "- **Compliance / Jurídico**: trazabilidad, citas, revisión humana por umbral.\n"
-        "- **Producto / Ingeniería**: arquitectura y puntos de extensión."
+        "- **PYME/Consultor (humano)**: define objetivo, hipótesis y supuestos; ajusta fuentes permitidas; "
+        "elige **rutas de entrada**; valida evidencias; decide sobre conclusiones; aprueba o bloquea la salida.\n"
+        "- **Sistema (RAGA)**: orquesta el flujo; aplica Policy-Gate; recupera evidencia; propone borrador con **citas**; "
+        "expone mapa de argumentos; calcula métricas y registra logs.\n"
+        "- **IA (modelos)**: en producción, apoya en **generación con citas**, **extracción de argumentos** y **evaluación**; "
+        "si la calidad cae bajo umbral, **no publica** sin revisión humana."
     )
-    h2("Casos ilustrativos")
+    h2("Puntos de control humano")
     st.markdown(
-        "- **Dossier país–producto** (conservas → México).\n"
-        "- **Dictamen PI** (uso/licencias; pros/contraargumentos).\n"
-        "- **HS preliminar** (clasificación arancelaria con límites)."
+        "1) **Intake y Plan** (obligatorio).  \n"
+        "2) **Policy-Gate** (puede bloquear fuentes).  \n"
+        "3) **Rutas de razonamiento** (ponderaciones y elección).  \n"
+        "4) **Revisión de evidencias/citas** (Composición).  \n"
+        "5) **Aprobación final** (si EEE/precision ≥ umbral; si no, revisión obligatoria)."
     )
 
-# 3
+# 3) Requisitos e instalación
 elif section == "3. Requisitos e instalación":
     h2("Requisitos")
     st.markdown(
@@ -84,14 +87,14 @@ elif section == "3. Requisitos e instalación":
         "- En Streamlit Cloud: selecciona el repo y `streamlit_app.py` como **Main file**."
     )
 
-# 4
+# 4) Estructura del proyecto
 elif section == "4. Estructura del proyecto":
     h2("Estructura")
     tree = (
         "root/\n"
         "├─ streamlit_app.py        # Lanzador; enlaza a Home en /pages\n"
         "├─ Home.py                 # Portada del tour\n"
-        "├─ pages/                  # Páginas del pipeline\n"
+        "├─ pages/                  # Páginas del pipeline (incluye Rutas y Síntesis)\n"
         "├─ config/                 # policy_gate.yaml, sla.yaml, ontology.json\n"
         "├─ utils/                  # policy_gate, ontology, retrieval, compose, eee, costs, logger\n"
         "├─ data/sources/           # Documentos demo\n"
@@ -100,102 +103,95 @@ elif section == "4. Estructura del proyecto":
     st.code(tree, language="text")
     h2("Convenciones clave")
     st.markdown(
-        "- Tablas: `st.dataframe(..., width=\"stretch\")` (no `use_container_width`).\n"
-        "- Gráficos: render **inline** (data URI) para evitar errores de ficheros temporales.\n"
-        "- Estado: `st.session_state` para hits, coste, alertas (`global_alert`)."
+        "- Tablas: `st.dataframe(..., width=\"stretch\")`.\n"
+        "- Gráficos: render **inline** (data URI) para evitar ficheros temporales.\n"
+        "- Estado: `st.session_state` para hits, coste, alertas (`global_alert`), ruta elegida, etc."
     )
 
-# 5
+# 5) Flujo de trabajo (visión general)
 elif section == "5. Flujo de trabajo (visión general)":
-    h2("Pipeline")
+    h2("Pipeline con control humano e IA acotada")
     st.markdown(
-        "1) **Intake y Plan** → objetivo/hipótesis/supuestos.  \n"
-        "2) **Ontología** → reescritura/etiquetado.  \n"
-        "3) **Policy-Gate** → filtro licencias/PII/jurisdicción.  \n"
-        "4) **RAG** → top-k con **snippets resaltados**.  \n"
-        "5) **Composición** → informe con **citas**.  \n"
-        "6) **CEWR** → mapa de **argumentos**.  \n"
-        "7) **EEE** → calidad del razonamiento.  \n"
-        "8) **Observabilidad** → €/tarea, latencia; coste **conectado** a la última consulta.  \n"
-        "9) **Runbook** → incidentes y **degradación**; banner **global**.  \n"
-        "10) **Checklist AI Act** → controles.  \n"
-        "11) **Logs** → trazabilidad."
+        "1) **Intake y Plan** — 🧑‍💼 Humano define objetivo/hipótesis/supuestos. *(Sin IA)*  \n"
+        "1B) **Rutas de razonamiento** — 🧑‍💼 Humano pondera criterios y elige ruta. *(Sin IA)*  \n"
+        "2) **Ontología y Reescritura** — Sistema etiqueta/re-escribe con reglas. *(Sin IA en MVP; IA opcional en prod)*  \n"
+        "3) **Policy-Gate** — Bloqueo por licencias/PII/jurisdicción. 🧑‍💼 puede anular. *(Sin IA)*  \n"
+        "4) **RAG** — Recuperación top-k sobre fuentes permitidas. *(MVP sin IA; en prod embeddings)*  \n"
+        "5) **Composición** — Borrador con **citas**. *(MVP sin IA; en prod LLM con citas + plantillas)*  \n"
+        "6) **CEWR** — Mapa Claim–Evidence–Warrant–Rebuttal. *(MVP simulado; en prod extracción IA)*  \n"
+        "7) **EEE** — Métrica de calidad. *(MVP heurística; en prod rúbrica/IA + validación humana)*  \n"
+        "8) **Observabilidad** — Coste/latencia, %citas válidas. *(Sin IA)*  \n"
+        "9) **Runbook** — Incidentes y degradación; bloqueo si baja calidad. *(Sin IA)*  \n"
+        "10) **Checklist** — Evidencias operativas. *(Sin IA)*  \n"
+        "11) **Logs** — Trazabilidad/auditoría. *(Sin IA)*"
     )
+    st.caption("Leyenda: 🧑‍💼 decisión humana; IA en producción con límites y revisión.")
 
-# 6
+# 6) Uso paso a paso (demo guiada)
 elif section == "6. Uso paso a paso (demo guiada)":
-    h2("Caso de demo: conservas → México")
+    h2("Caso de demo: conservas → México (HITL en cada paso clave)")
     st.markdown(
-        "- **1) Intake/Plan**: completa producto, mercado y supuestos; guarda.  \n"
-        "- **2) Ontología**: muestra consulta original/reescrita y etiquetas.  \n"
-        "- **3) Policy-Gate**: bloquea `priv_db` y/o `stock`; impactará en RAG.  \n"
-        "- **4) RAG**: ajusta **k** (1–5); observa **snippets resaltados** y **coste estimado**.  \n"
-        "- **5) Composición**: revisa secciones (expanders) y **citas** en popover.  \n"
-        "- **6) CEWR**: evidencias generan nodos dinámicos.  \n"
-        "- **7) EEE**: muestra indicadores; en producción, rúbrica validada.  \n"
-        "- **8) Observabilidad**: tarjeta conectada a la última búsqueda + series.  \n"
-        "- **9) Runbook**: activa “EEE bajo umbral” y verifica el banner global.  \n"
-        "- **10) Checklist**: marca controles para mostrar evidencia operativa.  \n"
-        "- **11) Logs**: revisa los últimos JSON."
+        "- **1) Intake/Plan (🧑‍💼)**: completa producto, mercado y supuestos; guarda.  \n"
+        "- **1B) Rutas (🧑‍💼)**: ajusta pesos, compara rutas y **elige** una; guarda experimentos.  \n"
+        "- **2) Ontología**: revisa consulta original/reescrita y etiquetas (reglas).  \n"
+        "- **3) Policy-Gate (🧑‍💼)**: bloquea `priv_db` y/o `stock` si procede; esto afectará a RAG.  \n"
+        "- **4) RAG**: ajusta **k** (1–5); observa **snippets** y **coste estimado**.  \n"
+        "- **5) Composición (🧑‍💼)**: abre expanders; revisa **citas** (popover); decide si falta evidencia.  \n"
+        "- **6) CEWR**: verifica que las evidencias respalden la Claim; anota contraargumentos.  \n"
+        "- **7) EEE (🧑‍💼)**: si la calidad no llega al umbral, **bloquea** y pide más evidencia.  \n"
+        "- **8) Observabilidad**: verifica tarjeta conectada a la última búsqueda + series.  \n"
+        "- **9) Runbook (🧑‍💼)**: simula incidente y observa el **banner global**; decide acción.  \n"
+        "- **10A) Síntesis (🧑‍💼)**: combina ruta, EEE, evidencia y coste en un IVI; descarga recomendación."
     )
 
-# 7
-elif section == "7. Buenas prácticas de presentación":
-    h2("Consejos rápidos")
+# 7) Dónde consulta la IA (y bajo qué control)
+elif section == "7. Dónde consulta la IA (y bajo qué control)":
+    h2("Puntos de IA en producción (con persona al mando)")
     st.markdown(
-        "- Habla en **outcomes**: evidencia, costes, SLA, revisión humana.\n"
-        "- Muestra **causa-efecto**: bloquea una fuente y enseña impacto en RAG/coste.\n"
-        "- No prometas magia: el MVP **simula** piezas reemplazables en prod.\n"
-        "- Cierra con valor: repetibilidad, trazabilidad, control de riesgo/coste."
+        "- **Composición con citas**: el LLM redacta usando **únicamente** fragmentos recuperados; "
+        "el humano revisa y puede devolver a RAG si faltan pruebas.\n"
+        "- **CEWR (extracción de argumentos)**: el LLM propone Claim/Evidence/Warrant/Rebuttal **vinculados a citas**; "
+        "el humano valida y añade contraargumentos.\n"
+        "- **EEE (evaluación)**: el LLM puntúa según rúbrica; si **EEE < umbral**, la salida queda **bloqueada** hasta revisión humana.\n"
+        "- **RAG (opcional)**: embeddings para recuperación semántica; aún así, **Policy-Gate** filtra y el humano decide **k**."
     )
-    h2("Tiempo sugerido")
-    st.write("8–12 minutos para todo el tour. Si algo falla, pasa de página: la narrativa aguanta.")
+    h2("Controles y salvaguardas")
+    st.markdown(
+        "- **Policy-Gate previo** a cualquier consulta/uso de fuente.\n"
+        "- **Citas obligatorias** visibles en el informe (trazabilidad).\n"
+        "- **Umbral de calidad** (EEE/precisión): si no se alcanza, **no se publica**.\n"
+        "- **Supervisión humana** en Intake/Plan, Rutas, Composición y Síntesis final."
+    )
 
-# 8
+# 8) Observabilidad
 elif section == "8. Observabilidad, SLO/SLA y costes":
     h2("Cómo leer las métricas")
     st.markdown(
-        "- **Coste estimado** (RAG): impacto de **k** y fuentes permitidas.\n"
+        "- **Coste estimado (RAG)**: impacto de **k** y fuentes permitidas.\n"
         "- **Series p50/p95**: latencia y € por tarea para capacidad/finanzas.\n"
-        "- **Alertas**: si p95 sube, degradación (modelo/truncation/cache)."
+        "- **Alertas (Runbook)**: si p95 sube, degradación (modelo/truncation/cache)."
     )
     h2("Reglas sugeridas")
     st.markdown(
-        "- **SLA**: dossier ≤120 s; precisión normativa ≥95%; **EEE** ≥ 2.5 (si no, bloqueo).\n"
+        "- **SLA**: dossier ≤120 s; precisión normativa ≥95%; **EEE** ≥ 2.5 (si no, bloqueo y revisión).\n"
         "- **SLO**: p50/p95 € por caso; degradación si 3 días con p95 fuera."
     )
 
-# 9
+# 9) Cumplimiento
 elif section == "9. Cumplimiento (Policy-Gate y AI Act)":
     h2("Policy-Gate")
     st.markdown(
         "- Filtro previo por **licencia/PII/jurisdicción**; lo bloqueado **no entra** a la búsqueda.\n"
-        "- Mensajes visibles y logs para **auditoría**."
+        "- Mensajes visibles y logs para **auditoría** (quién, cuándo, qué se bloqueó)."
     )
     h2("Checklist AI Act (práctico)")
     st.markdown(
         "- Gestión de riesgos, gobernanza de datos, transparencia, supervisión humana, registro.\n"
-        "- Objetivo: **evidencias operativas** (citas visibles, logs, versionado)."
+        "- Evidencias operativas: citas visibles, logs, versionado de ontología/prompts, umbrales de bloqueo."
     )
 
-# 10
-elif section == "10. Solución de problemas (FAQ técnico)":
-    h2("Errores habituales y soluciones")
-    st.markdown(
-        "- **Page not found (`Home.py`)**: usa `st.page_link(\"pages/Home.py\", ...)`.\n"
-        "- **Colisión `session_state`**: no reutilices keys de widgets (usa `intake_form`).\n"
-        "- **Deprecation `use_container_width`**: `width=\"stretch\"`.\n"
-        "- **PyArrow (`pii` bool/str)**: castea a texto en la tabla de `Policy_Gate.py`.\n"
-        "- **MediaFileHandler (PNG faltante)**: gráficos **inline** (data URI) y `plt.close(fig)`."
-    )
-    h2("Dudas de demo")
-    st.markdown(
-        "- **Sin citas**: ajusta k; des-bloquea fuentes; regenera Composición.\n"
-        "- **Alerta global**: desactívala en Runbook → “Ninguno”."
-    )
-
-# 11
-elif section == "11. Mantenimiento y versionado":
+# 10) Mantenimiento y versionado
+elif section == "10. Mantenimiento y versionado":
     h2("Qué versionar")
     st.markdown(
         "- **Ontología y prompts**: versionado y deprecación.\n"
@@ -206,20 +202,19 @@ elif section == "11. Mantenimiento y versionado":
     h2("Escalado posterior")
     st.markdown(
         "- Sustituir `retrieval.py` por BM25/embeddings.\n"
-        "- Reemplazar `eee.py` por rúbrica validada.\n"
+        "- Reemplazar `eee.py` por rúbrica validada (con fiabilidad interevaluador).\n"
         "- Conectar a BOE/DOUE reales y data warehouse de métricas."
     )
 
-# 12
-elif section == "12. Glosario rápido":
+# 11) Glosario
+elif section == "11. Glosario rápido":
     h2("Términos clave")
     st.markdown(
         "- **Ontología**: conceptos/relaciones que guían la búsqueda.\n"
         "- **RAG**: recuperación de trozos relevantes antes de generar.\n"
         "- **CEWR**: mapa Claim–Evidence–Warrant–Rebuttal.\n"
-        "- **EEE**: métrica didáctica de calidad del razonamiento.\n"
-        "- **SLA/SLO**: compromisos externos/internos.\n"
+        "- **EEE**: métrica de calidad del razonamiento.\n"
+        "- **SLA/SLO**: compromisos externos/internos de servicio.\n"
         "- **Policy-Gate**: gate de licencias/PII/jurisdicción previo a uso de fuente.\n"
         "- **p50/p95**: mediana y “peor de los buenos”."
     )
-
