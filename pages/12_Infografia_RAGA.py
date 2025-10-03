@@ -83,31 +83,31 @@ INFOGRAFIA = r"""<!DOCTYPE html>
             <h2 class="text-3xl font-bold text-center text-[#003f5c] mb-12">Potencial de Transferencia: De la Academia a la Empresa</h2>
             <p class="max-w-4xl mx-auto text-lg mb-10 text-center">RAGA actúa como un puente, traduciendo conceptos teóricos en soluciones concretas que abordan problemáticas empresariales críticas.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center flex flex-col">
                     <h4 class="font-bold text-lg text-[#003f5c] mb-2">Ética y Gobernanza</h4>
-                    <p class="text-sm h-16">Mitiga el riesgo regulatorio y de reputación mediante el `Policy-Gate` y logs de auditoría.</p>
-                    <div class="h-40 flex items-center justify-center">
+                    <p class="text-sm flex-grow">Mitiga el riesgo regulatorio y de reputación mediante el `Policy-Gate` y logs de auditoría.</p>
+                    <div class="h-40 mt-4">
                         <canvas id="riskChart1"></canvas>
                     </div>
                 </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                 <div class="bg-white p-6 rounded-xl shadow-lg text-center flex flex-col">
                     <h4 class="font-bold text-lg text-[#7a5195] mb-2">Lógica y Argumentación</h4>
-                    <p class="text-sm h-16">Resuelve la opacidad del modelo ("caja negra") con el mapa de argumentos `CEWR`.</p>
-                     <div class="h-40 flex items-center justify-center">
+                    <p class="text-sm flex-grow">Resuelve la opacidad del modelo ("caja negra") con el mapa de argumentos `CEWR`.</p>
+                     <div class="h-40 mt-4">
                         <canvas id="riskChart2"></canvas>
                     </div>
                 </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                 <div class="bg-white p-6 rounded-xl shadow-lg text-center flex flex-col">
                     <h4 class="font-bold text-lg text-[#ef5675] mb-2">Fiabilidad y Operaciones</h4>
-                    <p class="text-sm h-16">Controla la imprevisibilidad de costes y la fiabilidad operativa con `Observabilidad` y `Runbooks`.</p>
-                     <div class="h-40 flex items-center justify-center">
+                    <p class="text-sm flex-grow">Controla la imprevisibilidad de costes y la fiabilidad operativa con `Observabilidad` y `Runbooks`.</p>
+                     <div class="h-40 mt-4">
                         <canvas id="riskChart3"></canvas>
                     </div>
                 </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                 <div class="bg-white p-6 rounded-xl shadow-lg text-center flex flex-col">
                     <h4 class="font-bold text-lg text-[#ffa600] mb-2">Interacción Persona-PC</h4>
-                    <p class="text-sm h-16">Asegura el alineamiento con objetivos de negocio a través del `Intake` y `Plan` guiado.</p>
-                     <div class="h-40 flex items-center justify-center">
+                    <p class="text-sm flex-grow">Asegura el alineamiento con objetivos de negocio a través del `Intake` y `Plan` guiado.</p>
+                     <div class="h-40 mt-4">
                         <canvas id="riskChart4"></canvas>
                     </div>
                 </div>
@@ -208,8 +208,19 @@ INFOGRAFIA = r"""<!DOCTYPE html>
             data: { labels: ['Sin RAGA', 'Con RAGA'], datasets: [{ label: label, data: [80 + Math.random() * 15, 10 + Math.random() * 10], backgroundColor: ['#d1d5db', color], borderColor: '#ffffff', borderWidth: 2, barPercentage: 0.6 }] },
             options: {
                 responsive: true, maintainAspectRatio: false,
-                scales: { y: { beginAtZero: true, display: false }, x: { grid: { display: false } } },
-                plugins: { legend: { display: false }, ...tooltipTitleCallback.plugins }
+                scales: { 
+                    y: { 
+                        beginAtZero: true, 
+                        display: false 
+                    }, 
+                    x: { 
+                        grid: { display: false } 
+                    } 
+                },
+                plugins: { 
+                    legend: { display: false }, 
+                    ...tooltipTitleCallback.plugins 
+                }
             }
         });
     }
