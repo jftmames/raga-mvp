@@ -23,3 +23,6 @@ Verás cómo cada componente afecta a **evidencia, costes y SLA** en tiempo real
 """)
 
 st.page_link("pages/01_Intake_y_Plan.py", label="Iniciar tour ahora →", icon="▶️")
+st.page_link("pages/01B_Rutas_de_Razonamiento.py", label="Elegir rutas y ponderaciones", icon="🧭")
+st.page_link("pages/10A_Sintesis_Evaluacion_Final.py", label="Síntesis y recomendación final", icon="✅")
+
