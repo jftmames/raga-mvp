@@ -219,7 +219,7 @@ INFOGRAFIA = r"""<!DOCTYPE html>
                 },
                 plugins: { 
                     legend: { display: false }, 
-                    ...tooltipTitleCallback.plugins 
+                    tooltip: { enabled: false } // Tooltips desactivados aquí
                 }
             }
         });
@@ -236,6 +236,8 @@ INFOGRAFIA = r"""<!DOCTYPE html>
 
 # Altura generosa + scroll (la infografía es larga)
 html(INFOGRAFIA, height=2800, scrolling=True)
+
+
 
 
 
