@@ -3,7 +3,11 @@ import streamlit as st
 st.title("1) Intake y Plan")
 st.write("Define el caso y explicita objetivo, hipótesis y supuestos. Esto alimenta la trazabilidad y la evaluación (EEE).")
 
-# ✅ Cambiamos la clave del formulario para evitar colisión con st.session_state["intake"]
+# Banner global de incidentes
+if st.session_state.get("global_alert"):
+    st.error(st.session_state["global_alert"])
+
+# Usar una clave de formulario que NO colisione con session_state["intake"]
 with st.form("intake_form"):
     col1, col2 = st.columns(2)
     with col1:
@@ -29,7 +33,6 @@ with st.form("intake_form"):
     submitted = st.form_submit_button("Guardar plan")
 
 if submitted:
-    # ✅ Guardamos los datos en una clave distinta de cualquier widget
     st.session_state["intake"] = {
         "caso": caso,
         "producto": producto,
@@ -41,7 +44,6 @@ if submitted:
     st.success("Plan guardado.")
     st.json(st.session_state["intake"])
 else:
-    # Si ya existían datos en sesión, los mostramos; si no, un aviso
     if "intake" in st.session_state:
         st.info("Plan cargado desde la sesión actual.")
         st.json(st.session_state["intake"])
